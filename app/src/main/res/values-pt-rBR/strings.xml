@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Claro Movies</string>
+    <string name="title_home">Início</string>
+    <string name="title_favorites">Favoritos</string>
+    <string name="title_about">Sobre</string>
+    <string name="retry">TENTAR NOVAMENTE</string>
+    <string name="no_connection">Sem conexão com a Internet</string>
+    <string name="generic_error">Ocorreu um erro, gostaria de tentar novamente</string>
+    <string name="none">nada</string>
+    <string name="save_to_favorites">Adicionar aos favoritos</string>
+    <string name="no_favorites">Nenhum favorito adicionado no momento</string>
+</resources>
