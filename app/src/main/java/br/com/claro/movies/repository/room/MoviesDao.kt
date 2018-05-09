@@ -14,10 +14,10 @@ import br.com.claro.movies.dto.Movie
 @Dao
 interface MoviesDao {
     @Query("SELECT * FROM movie")
-    fun loadFavoriteGists(): LiveData<List<Movie>>
+    fun loadFavoriteMovies(): LiveData<List<Movie>>
 
     @Query("SELECT EXISTS(SELECT 1 FROM movie WHERE id = :id LIMIT 1)")
-    fun isFavorite(id: String): Boolean
+    fun isFavorite(id: Int): Boolean
 
     @Insert(onConflict = REPLACE)
     fun insert(movie: Movie)

@@ -1,6 +1,5 @@
 package br.com.claro.movies
 
-import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -16,7 +15,7 @@ class ExampleInstrumentedTest {
     @Test
     fun useAppContext() {
         // Context of the app under test.
-        val appContext = InstrumentationRegistry.getTargetContext()
+        val appContext = InstrumentationRemoviery.getTargetContext()
         assertEquals("br.com.claro.movies", appContext.packageName)
     }
 }

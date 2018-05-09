@@ -12,5 +12,5 @@ import br.com.claro.movies.dto.Movie
 @Database(entities = [(Movie::class)], version = 1)
 @TypeConverters(ClaroConverters::class)
 abstract class ClaroDatabase : RoomDatabase() {
-    internal abstract fun gistDao(): MoviesDao
+    internal abstract fun movieDao(): MoviesDao
 }

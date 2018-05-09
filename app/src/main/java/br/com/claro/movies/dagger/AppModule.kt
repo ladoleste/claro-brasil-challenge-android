@@ -4,10 +4,10 @@ import android.arch.persistence.room.Room
 import br.com.claro.movies.BuildConfig
 import br.com.claro.movies.common.ClaroApplication
 import br.com.claro.movies.common.ClaroApplication.Companion.apiUrl
-import br.com.claro.movies.common.ClaroService
 import br.com.claro.movies.repository.MoviesRepository
 import br.com.claro.movies.repository.MoviesRepositoryImpl
 import br.com.claro.movies.repository.room.ClaroDatabase
+import br.com.claro.movies.service.MoviesService
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -37,7 +37,7 @@ class AppModule {
 
         val logger = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger { mensagem -> Timber.tag("OkHttp").d(mensagem); })
         @Suppress("ConstantConditionIf")
-        logger.level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BASIC else HttpLoggingInterceptor.Level.NONE
+        logger.level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
         return logger
     }
 
@@ -50,7 +50,7 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideApi(gson: Gson, client: OkHttpClient): ClaroService {
+    fun provideApi(gson: Gson, client: OkHttpClient): MoviesService {
 
         val retrofit = Retrofit.Builder()
                 .client(client)
@@ -59,7 +59,7 @@ class AppModule {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
                 .build()
 
-        return retrofit.create(ClaroService::class.java)
+        return retrofit.create(MoviesService::class.java)
     }
 
     @Provides
@@ -68,7 +68,7 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideDatabase() = Room.databaseBuilder(ClaroApplication.instance, ClaroDatabase::class.java, "gistdb")
+    fun provideDatabase() = Room.databaseBuilder(ClaroApplication.instance, ClaroDatabase::class.java, "moviedb")
             .allowMainThreadQueries()
             .build()
 }

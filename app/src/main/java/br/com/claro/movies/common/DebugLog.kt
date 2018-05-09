@@ -17,11 +17,11 @@ class DebugLog : Timber.DebugTree() {
         //allows navigation from logcat
         tag?.let {
             if (it.contains('|')) {
-                Log.println(priority, "ClaroApp", String.format(".(%s.kt:%s) - %s", tag.split("|")[0].toRegex(), tag.split("|")[1].toRegex(), message))
+                val message1 = String.format(".(%s.kt:%s) - %s", tag.split("|")[0].toRegex(), tag.split("|")[1].toRegex(), message)
+                Log.println(priority, "ClaroApp", message1)
             } else {
                 Log.println(priority, tag, message)
             }
         } ?: Log.println(priority, "MyApp", message)
-
     }
 }
