@@ -3,7 +3,6 @@ package br.com.claro.movies.repository.room
 import android.arch.persistence.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import java.io.File
 
 
 /**
@@ -12,12 +11,12 @@ import java.io.File
 class ClaroConverters {
 
     @TypeConverter
-    fun fileToString(file: Map<String, File>?): String? = Gson().toJson(file)
+    fun intListToString(list: List<Int>): String? = Gson().toJson(list)
 
     @TypeConverter
-    fun stringToFile(str: String?): Map<String, File>? {
-        val type = object : TypeToken<Map<String, File>>() {}.type
-        return Gson().fromJson<Map<String, File>>(str, type)
+    fun stringToIntlist(str: String?): List<Int> {
+        val type = object : TypeToken<List<Int>>() {}.type
+        return Gson().fromJson<List<Int>>(str, type)
     }
 
 //    @TypeConverter
