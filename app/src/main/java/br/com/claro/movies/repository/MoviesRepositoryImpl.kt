@@ -22,6 +22,8 @@ class MoviesRepositoryImpl : MoviesRepository {
 
     override fun getMovies(page: Int) = moviesService.getMovies(page)
 
+    override fun getTrailers(id: Int) = moviesService.getTrailers(id)
+
     override fun getMovie(id: Int) = moviesService.getMovie(id)
 
     override fun getFavorites() = db.movieDao().loadFavoriteMovies()
