@@ -20,6 +20,7 @@ class DetailsViewModel : BaseViewModel() {
 
     val movie = MutableLiveData<MovieDetails>()
     val title = MutableLiveData<String>()
+    val posterUrl = MutableLiveData<String>()
     val isFavorite = MutableLiveData<Boolean>()
 
     val movieError = MutableLiveData<Throwable>()
@@ -37,6 +38,7 @@ class DetailsViewModel : BaseViewModel() {
                 .doOnError({ t -> Timber.e(t) }).subscribe({
                     movie.postValue(it)
                     title.postValue(it.title)
+                    posterUrl.postValue(it.posterUrl)
                     isFavorite.postValue(favorite)
                 }, {
                     movieError.postValue(it)

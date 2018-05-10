@@ -76,7 +76,7 @@
                     android:contentDescription="@string/none"
                     android:scaleType="centerCrop"
                     android:src="@mipmap/ic_launcher"
-
+                    app:imageUrl="@{model.posterUrl}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/toolbar" />
 

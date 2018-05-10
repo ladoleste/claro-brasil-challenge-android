@@ -37,13 +37,11 @@ class DetailsActivity : AppCompatActivity() {
         model.movie.observe(this, Observer { binding.loading.visibility = View.GONE })
 
         model.movieError.observe(this, Observer(this::handleError))
-
     }
 
     override fun onResume() {
         super.onResume()
         model.loadMovie(intent.getIntExtra("id", 0))
-//        model.loadMovie("8fcccd4d54ec298e3b120cbc1230c02a")
     }
 
     private fun handleError(it: Throwable?) {

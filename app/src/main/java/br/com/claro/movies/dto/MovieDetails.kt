@@ -1,5 +1,6 @@
 package br.com.claro.movies.dto
 
+import br.com.claro.movies.BuildConfig
 import com.google.gson.annotations.SerializedName
 
 data class MovieDetails(
@@ -28,4 +29,6 @@ data class MovieDetails(
         @SerializedName("video") val video: Boolean,
         @SerializedName("vote_average") val voteAverage: Double,
         @SerializedName("vote_count") val voteCount: Int
-)
+) {
+    val posterUrl get() = BuildConfig.BASE_IMAGE_PATH + posterPath
+}

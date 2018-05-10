@@ -2,6 +2,7 @@ package br.com.claro.movies.dto
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
+import br.com.claro.movies.BuildConfig
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -24,4 +25,6 @@ data class Movie(
         @SerializedName("adult") val adult: Boolean,
         @SerializedName("overview") val overview: String,
         @SerializedName("release_date") val releaseDate: String
-)
+) {
+    val posterUrl get() = BuildConfig.BASE_IMAGE_PATH + posterPath
+}

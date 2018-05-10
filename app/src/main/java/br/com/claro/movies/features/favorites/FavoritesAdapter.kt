@@ -3,6 +3,7 @@ package br.com.claro.movies.features.favorites
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import br.com.claro.movies.common.loadImage
 import br.com.claro.movies.databinding.ItemMovieBinding
 import br.com.claro.movies.dto.Movie
 import br.com.claro.movies.features.common.ItemClick
@@ -33,6 +34,7 @@ class FavoritesAdapter(_items: List<Movie>, private val itemClick: ItemClick) : 
 
         fun bind(item: Movie) {
             binding.movie = item
+            binding.ivAvatar.loadImage(item.posterUrl)
             binding.executePendingBindings()
         }
     }
