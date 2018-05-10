@@ -6,6 +6,7 @@
     <string name="retry">RETRY</string>
     <string name="no_connection">No internet connection</string>
     <string name="generic_error">There was an error, would you like to try again?</string>
+    <string name="error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
     <string name="none">none</string>
     <string name="save_to_favorites">Save to Favorites</string>
     <string name="no_favorites">No favorites at the moment</string>

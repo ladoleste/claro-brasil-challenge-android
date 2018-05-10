@@ -21,6 +21,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "API_URL", "\"https://api.themoviedb.org/3/\""
         buildConfigField "String", "BASE_IMAGE_PATH", "\"http://image.tmdb.org/t/p/w185\""
+        buildConfigField 'String', 'YOUTUBE_API_KEY', '"AIzaSyAiQh1MyeUbsxui2RwmdgIsUQ5hh9PXpck"'
     }
 
     signingConfigs {
@@ -47,6 +48,8 @@ android {
 def supportLibVersion = '27.1.1'
 
 dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "com.android.support:appcompat-v7:$supportLibVersion"
     implementation "com.android.support:recyclerview-v7:$supportLibVersion"

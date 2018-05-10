@@ -9,4 +9,5 @@
     <string name="none">nada</string>
     <string name="save_to_favorites">Adicionar aos favoritos</string>
     <string name="no_favorites">Nenhum favorito adicionado no momento</string>
+    <string name="error_player">Ocorreu um erro ao inicializar o YouTubePlayer (%1$s)</string>
 </resources>

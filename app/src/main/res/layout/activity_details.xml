@@ -12,107 +12,94 @@
         <variable
             name="model"
             type="br.com.claro.movies.features.detail.DetailsViewModel" />
-
     </data>
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/root_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:background="#fff">
 
         <include
             android:id="@+id/inc_toolbar"
             layout="@layout/inc_toolbar" />
 
-        <ScrollView
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{model.title}"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/iv_avatar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/inc_toolbar"
+            tools:text="MVVM with LiveData and DataBindnig" />
+
+        <TextView
+            android:id="@+id/tv_author"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{model.title}"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/iv_avatar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            tools:text="Claro" />
+
+        <TextView
+            android:id="@+id/tv_languages"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{model.title}"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/iv_avatar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_author"
+            tools:text="Languages: Kotlin, Java, C#, Javascript" />
+
+        <ImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:contentDescription="@string/none"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher"
+            app:imageUrl="@{model.posterUrl}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_title" />
+
+        <android.support.constraint.Barrier
+            android:id="@+id/barrier1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="iv_avatar,tv_languages" />
+
+        <Switch
+            android:id="@+id/sw_favorites"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:text="@string/save_to_favorites"
+            app:layout_constraintTop_toBottomOf="@id/barrier1" />
 
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/root_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:background="#fff">
+        <LinearLayout
+            android:id="@+id/ll_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/sw_favorites" />
 
-                <TextView
-                    android:id="@+id/tv_title"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@{model.title}"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toStartOf="@+id/iv_avatar"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/toolbar"
-                    tools:text="MVVM with LiveData and DataBindnig" />
+        <ProgressBar
+            android:id="@+id/loading"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone" />
 
-                <TextView
-                    android:id="@+id/tv_author"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@{model.title}"
-                    android:textSize="18sp"
-                    app:layout_constraintEnd_toStartOf="@+id/iv_avatar"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_title"
-                    tools:text="Claro" />
-
-                <TextView
-                    android:id="@+id/tv_languages"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@{model.title}"
-                    android:textSize="18sp"
-                    app:layout_constraintEnd_toStartOf="@+id/iv_avatar"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_author"
-                    tools:text="Languages: Kotlin, Java, C#, Javascript" />
-
-                <ImageView
-                    android:id="@+id/iv_avatar"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:contentDescription="@string/none"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/ic_launcher"
-                    app:imageUrl="@{model.posterUrl}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/toolbar" />
-
-                <android.support.constraint.Barrier
-                    android:id="@+id/barrier1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:barrierDirection="bottom"
-                    app:constraint_referenced_ids="iv_avatar,tv_languages" />
-
-                <Switch
-                    android:id="@+id/sw_favorites"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/save_to_favorites"
-                    app:layout_constraintTop_toBottomOf="@id/barrier1" />
-
-                <LinearLayout
-                    android:id="@+id/ll_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:orientation="vertical"
-                    app:layout_constraintTop_toBottomOf="@id/sw_favorites" />
-
-                <ProgressBar
-                    android:id="@+id/loading"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:visibility="gone" />
-
-            </android.support.constraint.ConstraintLayout>
-        </ScrollView>
-    </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 
 </layout>

@@ -17,11 +17,12 @@ import br.com.claro.movies.databinding.FragmentMainBinding
 import br.com.claro.movies.dto.Movie
 import br.com.claro.movies.features.common.EndlessRecyclerViewScrollListener
 import br.com.claro.movies.features.common.ItemClick
-import br.com.claro.movies.features.detail.DetailsActivity
+import br.com.claro.movies.features.detail.VideoListDemoActivity
 
 class MainFragment : Fragment(), ItemClick {
     override fun onItemClick(movie: Movie) {
-        val intent = Intent(context, DetailsActivity::class.java)
+        val intent = Intent(context, VideoListDemoActivity::class.java)
+//        val intent = Intent(context, DetailsActivity::class.java)
         intent.putExtra("id", movie.id)
         startActivity(intent)
     }

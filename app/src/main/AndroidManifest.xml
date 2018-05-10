@@ -24,6 +24,9 @@
         <activity
             android:name=".features.detail.DetailsActivity"
             android:label="@string/title_favorites" />
+        <activity
+            android:name=".features.detail.VideoListDemoActivity"
+            android:label="@string/title_favorites" />
     </application>
 
 </manifest>
