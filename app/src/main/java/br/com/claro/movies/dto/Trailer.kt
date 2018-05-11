@@ -11,4 +11,6 @@ data class Trailer(
         @SerializedName("site") val site: String,
         @SerializedName("size") val size: Int,
         @SerializedName("type") val type: String
-)
+) {
+    val thumbnail = "https://img.youtube.com/vi/$id/mqdefault.jpg"
+}
