@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         binding.navigation.setOnNavigationItemSelectedListener(this)
 
-        addFragment(fragSearch, R.id.container)
+        addFragment(fragMain, R.id.container)
 
         binding.setLifecycleOwner(this)
     }

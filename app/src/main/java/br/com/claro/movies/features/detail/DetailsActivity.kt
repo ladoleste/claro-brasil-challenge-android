@@ -14,6 +14,7 @@ import br.com.claro.movies.BuildConfig
 import br.com.claro.movies.R
 import br.com.claro.movies.common.getErrorMessage
 import br.com.claro.movies.databinding.ActivityDetailsBinding
+import br.com.claro.movies.dto.Poster
 import br.com.claro.movies.dto.Trailer
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
@@ -41,6 +42,13 @@ class DetailsActivity : AppCompatActivity(), ItemTrailerClick {
             }
         }
 
+        model.images.observe(this, Observer {
+            it?.let {
+                loadImages(it)
+            }
+            binding.loading.visibility = View.GONE
+        })
+
         model.trailers.observe(this, Observer {
             it?.let {
                 loadTrailers(it)
@@ -54,6 +62,14 @@ class DetailsActivity : AppCompatActivity(), ItemTrailerClick {
         })
 
         model.movieError.observe(this, Observer(this::handleError))
+        model.trailersError.observe(this, Observer(this::handleError))
+        model.imagesError.observe(this, Observer(this::handleError))
+    }
+
+    private fun loadImages(it: List<Poster>) {
+        binding.viewPager.clipToPadding = false
+        binding.viewPager.setPadding(40, 0, 40, 0)
+        binding.viewPager.adapter = ImagePagerAdapter(it)
     }
 
     private fun loadTrailers(it: List<Trailer>) {
