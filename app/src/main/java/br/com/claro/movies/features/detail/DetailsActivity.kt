@@ -93,8 +93,10 @@ class DetailsActivity : AppCompatActivity(), ItemTrailerClick {
 
     override fun onResume() {
         super.onResume()
-        model.loadMovie(intent.getIntExtra("id", 0))
-        model.loadTrailers(intent.getIntExtra("id", 0))
+        val id = intent.getIntExtra("id", 0)
+        model.loadMovie(id)
+        model.loadTrailers(id)
+        model.loadImages(id)
     }
 
     private fun handleError(it: Throwable?) {

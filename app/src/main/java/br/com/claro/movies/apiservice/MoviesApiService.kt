@@ -1,5 +1,6 @@
 package br.com.claro.movies.apiservice
 
+import br.com.claro.movies.dto.ImagesResponse
 import br.com.claro.movies.dto.MovieDetails
 import br.com.claro.movies.dto.MovieResponse
 import br.com.claro.movies.dto.TrailersResponse
@@ -20,6 +21,9 @@ interface MoviesApiService {
 
     @GET("movie/{id}/videos")
     fun getTrailers(@Path("id") id: Int): Single<TrailersResponse>
+
+    @GET("movie/{id}/images")
+    fun getImages(@Path("id") id: Int): Single<ImagesResponse>
 
     @GET("search/movie")
     fun getSuggestions(@Query("query") query: String): Single<MovieResponse>
