@@ -22,6 +22,7 @@ android {
         buildConfigField "String", "API_URL", "\"https://api.themoviedb.org/3/\""
         buildConfigField "String", "BASE_IMAGE_PATH", "\"http://image.tmdb.org/t/p/w185\""
         buildConfigField 'String', 'YOUTUBE_API_KEY', '"AIzaSyAiQh1MyeUbsxui2RwmdgIsUQ5hh9PXpck"'
+        buildConfigField 'String', 'TMDB_API_KEY', '"15595205b6a5afdc3bdbe44a00302ba9"'
     }
 
     signingConfigs {

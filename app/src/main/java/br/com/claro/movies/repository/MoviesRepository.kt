@@ -11,6 +11,7 @@ import io.reactivex.Single
  * Created by Anderson on 23/03/2018
  */
 interface MoviesRepository {
+    fun getSuggestions(query: String): Single<MovieResponse>
     fun getMovies(page: Int): Single<MovieResponse>
     fun getTrailers(id: Int): Single<TrailersResponse>
     fun getMovie(id: Int): Single<MovieDetails>

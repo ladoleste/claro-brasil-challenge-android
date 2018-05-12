@@ -2,7 +2,7 @@
     <string name="app_name">Claro Videos</string>
     <string name="title_home">Home</string>
     <string name="title_favorites">Favorites</string>
-    <string name="title_about">About</string>
+    <string name="title_about">Search</string>
     <string name="retry">RETRY</string>
     <string name="no_connection">No internet connection</string>
     <string name="generic_error">There was an error, would you like to try again?</string>

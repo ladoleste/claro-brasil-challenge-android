@@ -2,18 +2,19 @@ package br.com.claro.movies.dagger
 
 import android.arch.persistence.room.Room
 import br.com.claro.movies.BuildConfig
+import br.com.claro.movies.apiservice.MoviesApiService
 import br.com.claro.movies.common.ClaroApplication
 import br.com.claro.movies.common.ClaroApplication.Companion.apiUrl
 import br.com.claro.movies.repository.MoviesRepository
 import br.com.claro.movies.repository.MoviesRepositoryImpl
 import br.com.claro.movies.repository.room.ClaroDatabase
-import br.com.claro.movies.service.MoviesService
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -42,15 +43,24 @@ class AppModule {
     }
 
     @Provides
+    fun provideQueryInterceptor() = Interceptor { chain ->
+        var request = chain.request()
+        val url = request.url().newBuilder().addQueryParameter("api_key", BuildConfig.TMDB_API_KEY).build()
+        request = request.newBuilder().url(url).build()
+        chain.proceed(request)
+    }
+
+    @Provides
     @Singleton
-    fun provideOkHttp(logger: HttpLoggingInterceptor): OkHttpClient = OkHttpClient.Builder()
+    fun provideOkHttp(logger: HttpLoggingInterceptor, queryInterceptor: Interceptor): OkHttpClient = OkHttpClient.Builder()
             .addInterceptor(logger)
+            .addInterceptor(queryInterceptor)
             .addNetworkInterceptor(StethoInterceptor())
             .build()
 
     @Provides
     @Singleton
-    fun provideApi(gson: Gson, client: OkHttpClient): MoviesService {
+    fun provideApi(gson: Gson, client: OkHttpClient): MoviesApiService {
 
         val retrofit = Retrofit.Builder()
                 .client(client)
@@ -59,7 +69,7 @@ class AppModule {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
                 .build()
 
-        return retrofit.create(MoviesService::class.java)
+        return retrofit.create(MoviesApiService::class.java)
     }
 
     @Provides
