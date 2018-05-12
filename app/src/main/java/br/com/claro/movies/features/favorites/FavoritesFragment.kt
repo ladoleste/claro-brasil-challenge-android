@@ -5,10 +5,12 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import br.com.claro.movies.R
 import br.com.claro.movies.databinding.FragmentFavoritesBinding
 import br.com.claro.movies.dto.Movie
 import br.com.claro.movies.features.common.ItemClick
@@ -28,6 +30,11 @@ class FavoritesFragment : Fragment(), ItemClick {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentFavoritesBinding.inflate(inflater, container, false)
         binding.setLifecycleOwner(this)
+
+        val toolbar = binding.incToolbar!!.toolbar
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        toolbar.title = getString(R.string.title_favorites)
+
         val linearLayoutManager = LinearLayoutManager(activity)
         binding.rvListing.layoutManager = linearLayoutManager
         return binding.root

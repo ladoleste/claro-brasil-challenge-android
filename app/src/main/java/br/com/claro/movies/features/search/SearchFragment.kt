@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -31,6 +32,11 @@ class SearchFragment : Fragment(), ItemClick {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentSearchBinding.inflate(inflater, container, false)
         binding.setLifecycleOwner(this)
+
+        val toolbar = binding.incToolbar!!.toolbar
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        toolbar.title = getString(R.string.title_search)
+
         val linearLayoutManager = LinearLayoutManager(activity)
         binding.rvListing.layoutManager = linearLayoutManager
         binding.rvListing.setHasFixedSize(true)

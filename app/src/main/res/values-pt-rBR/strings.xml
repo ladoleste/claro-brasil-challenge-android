@@ -2,7 +2,7 @@
     <string name="app_name">Claro Videos</string>
     <string name="title_home">Início</string>
     <string name="title_favorites">Favoritos</string>
-    <string name="title_about">Busca</string>
+    <string name="title_search">Busca</string>
     <string name="retry">TENTAR NOVAMENTE</string>
     <string name="no_connection">Sem conexão com a Internet</string>
     <string name="generic_error">Ocorreu um erro, gostaria de tentar novamente</string>

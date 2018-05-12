@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
  */
 object DataBinder {
     @JvmStatic
-    @BindingAdapter("app:imageUrl")
+    @BindingAdapter("imageUrl")
     fun setImageUrl(imageView: ImageView, url: String?) {
         Glide.with(imageView.context).load(url).into(imageView)
     }
