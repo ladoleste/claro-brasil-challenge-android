@@ -17,7 +17,7 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/root_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="#fff">
 
         <include
@@ -99,6 +99,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:visibility="gone" />
+
+        <fragment
+            android:id="@+id/youtube_fragment"
+            android:name="com.google.android.youtube.player.YouTubePlayerFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/ll_container" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_listing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/youtube_fragment" />
 
     </android.support.constraint.ConstraintLayout>
 

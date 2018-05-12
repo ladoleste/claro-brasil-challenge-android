@@ -6,16 +6,23 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
+import br.com.claro.movies.BuildConfig
 import br.com.claro.movies.R
 import br.com.claro.movies.common.getErrorMessage
 import br.com.claro.movies.databinding.ActivityDetailsBinding
+import br.com.claro.movies.dto.Trailer
+import com.google.android.youtube.player.YouTubeInitializationResult
+import com.google.android.youtube.player.YouTubePlayer
+import com.google.android.youtube.player.YouTubePlayerFragment
 
-class DetailsActivity : AppCompatActivity() {
-
+class DetailsActivity : AppCompatActivity(), ItemTrailerClick {
     private lateinit var model: DetailsViewModel
     private lateinit var binding: ActivityDetailsBinding
+    private lateinit var trailerAdapter: TrailerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,14 +41,55 @@ class DetailsActivity : AppCompatActivity() {
             }
         }
 
-        model.movie.observe(this, Observer { binding.loading.visibility = View.GONE })
+        model.trailers.observe(this, Observer {
+            loadTrailers(it)
+            binding.loading.visibility = View.GONE
+        })
+
+        model.movie.observe(this, Observer {
+            supportActionBar?.title = it?.title
+            binding.loading.visibility = View.GONE
+        })
 
         model.movieError.observe(this, Observer(this::handleError))
+    }
+
+    private fun loadTrailers(it: List<Trailer>?) {
+
+        it?.let {
+            val youTubePlayerFragment = fragmentManager.findFragmentById(R.id.youtube_fragment) as YouTubePlayerFragment
+            youTubePlayerFragment.initialize(BuildConfig.YOUTUBE_API_KEY, object : YouTubePlayer.OnInitializedListener {
+                override fun onInitializationSuccess(provider: YouTubePlayer.Provider, player: YouTubePlayer, wasRestored: Boolean) {
+                    if (!wasRestored) {
+                        player.cueVideo(it.first().key)
+                    }
+                }
+
+                override fun onInitializationFailure(provider: YouTubePlayer.Provider?, errorReason: YouTubeInitializationResult) {
+                    if (errorReason.isUserRecoverableError) {
+                        errorReason.getErrorDialog(this@DetailsActivity, 1).show()
+                    } else {
+                        val errorMessage = String.format(getString(R.string.error_player), errorReason.toString())
+                        Toast.makeText(this@DetailsActivity, errorMessage, Toast.LENGTH_LONG).show()
+                    }
+                }
+            })
+
+            if (binding.rvListing.adapter == null) {
+                binding.rvListing.layoutManager = LinearLayoutManager(this)
+                val trailers = it.toMutableList()
+                if (trailers.isNotEmpty())
+                    trailers.removeAt(0)
+                trailerAdapter = TrailerAdapter(trailers, this)
+                binding.rvListing.adapter = trailerAdapter
+            }
+        }
     }
 
     override fun onResume() {
         super.onResume()
         model.loadMovie(intent.getIntExtra("id", 0))
+        model.loadTrailers(intent.getIntExtra("id", 0))
     }
 
     private fun handleError(it: Throwable?) {
@@ -57,5 +105,9 @@ class DetailsActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         onBackPressed()
         return true
+    }
+
+    override fun onItemClick(movie: Trailer) {
+
     }
 }

@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import br.com.claro.movies.common.ClaroApplication
 import br.com.claro.movies.dto.Movie
 import br.com.claro.movies.dto.MovieDetails
+import br.com.claro.movies.dto.Trailer
 import br.com.claro.movies.features.common.BaseViewModel
 import br.com.claro.movies.repository.MoviesRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -19,6 +20,7 @@ class DetailsViewModel : BaseViewModel() {
     lateinit var repo: MoviesRepository
 
     val movie = MutableLiveData<MovieDetails>()
+    val trailers = MutableLiveData<List<Trailer>>()
     val title = MutableLiveData<String>()
     val posterUrl = MutableLiveData<String>()
     val isFavorite = MutableLiveData<Boolean>()
@@ -45,6 +47,17 @@ class DetailsViewModel : BaseViewModel() {
                 }))
     }
 
+    fun loadTrailers(id: Int) {
+
+        cDispose.add(repo.getTrailers(id)
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnError({ t -> Timber.e(t) }).subscribe({
+                    trailers.postValue(it.trailers)
+                }, {
+                    movieError.postValue(it)
+                }))
+    }
+
     fun addToFavorites() {
         try {
             repo.addToFavorite(movie.value!!.toMovie())
@@ -60,21 +73,21 @@ class DetailsViewModel : BaseViewModel() {
             movieError.postValue(e)
         }
     }
-}
 
-private fun MovieDetails.toMovie() = Movie(
-        this.id,
-        this.voteCount,
-        this.video,
-        this.voteAverage,
-        this.title,
-        this.popularity,
-        this.posterPath,
-        this.originalLanguage,
-        this.originalTitle,
-        emptyList(),
-        this.backdropPath,
-        this.adult,
-        this.overview,
-        this.releaseDate
-)
+    private fun MovieDetails.toMovie() = Movie(
+            this.id,
+            this.voteCount,
+            this.video,
+            this.voteAverage,
+            this.title,
+            this.popularity,
+            this.posterPath,
+            this.originalLanguage,
+            this.originalTitle,
+            emptyList(),
+            this.backdropPath,
+            this.adult,
+            this.overview,
+            this.releaseDate
+    )
+}
