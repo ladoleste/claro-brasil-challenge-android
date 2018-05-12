@@ -17,8 +17,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
-import java.text.SimpleDateFormat
-import java.util.*
 
 fun ViewGroup.inflate(layoutId: Int): View = LayoutInflater.from(context).inflate(layoutId, this, false)
 
@@ -37,11 +35,6 @@ fun String.toHtml(): Spanned {
         @Suppress("DEPRECATION")
         Html.fromHtml(this)
     }
-}
-
-fun Date.toString(format: String): String {
-    val dateFormat = SimpleDateFormat(format, Locale.getDefault())
-    return dateFormat.format(this)
 }
 
 fun Throwable?.getErrorMessage() = when (this) {

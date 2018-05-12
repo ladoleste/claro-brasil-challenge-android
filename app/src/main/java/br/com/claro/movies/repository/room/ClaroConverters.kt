@@ -3,6 +3,7 @@ package br.com.claro.movies.repository.room
 import android.arch.persistence.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.util.*
 
 
 /**
@@ -19,9 +20,9 @@ class ClaroConverters {
         return Gson().fromJson<List<Int>>(str, type)
     }
 
-//    @TypeConverter
-//    fun dateToLong(date: Date) = date.time
-//
-//    @TypeConverter
-//    fun longToDate(time: Long) = Date(time)
+    @TypeConverter
+    fun dateToLong(date: Date) = date.time
+
+    @TypeConverter
+    fun longToDate(time: Long) = Date(time)
 }

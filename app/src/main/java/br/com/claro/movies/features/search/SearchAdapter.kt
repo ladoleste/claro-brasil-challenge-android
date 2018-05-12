@@ -40,7 +40,9 @@ class SearchAdapter(_items: List<Movie>, private val itemClick: ItemClick) : Rec
     }
 
     fun updateItems(it: List<Movie>) {
+        items.clear()
         items.addAll(it)
         notifyDataSetChanged()
+//        notifyItemRangeChanged(0, it.size)
     }
 }

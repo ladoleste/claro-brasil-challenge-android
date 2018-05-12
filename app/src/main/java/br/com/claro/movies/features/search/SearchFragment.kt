@@ -8,6 +8,8 @@ import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,13 +35,30 @@ class SearchFragment : Fragment(), ItemClick {
         binding = FragmentSearchBinding.inflate(inflater, container, false)
         binding.setLifecycleOwner(this)
 
-        val toolbar = binding.incToolbar!!.toolbar
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
-        toolbar.title = getString(R.string.title_search)
+        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
+        binding.toolbar.title = getString(R.string.title_search)
 
         val linearLayoutManager = LinearLayoutManager(activity)
         binding.rvListing.layoutManager = linearLayoutManager
         binding.rvListing.setHasFixedSize(true)
+
+        binding.etSearch.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {
+                if (s.isNotBlank()) {
+                    binding.loading.visibility = View.VISIBLE
+                    model.loadSuggestions(s.toString())
+                } else {
+                    showList(emptyList())
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
+
         return binding.root
     }
 
@@ -50,15 +69,12 @@ class SearchFragment : Fragment(), ItemClick {
 
         model.movies.observe(this, Observer {
             binding.loading.visibility = View.GONE
-            showList(it)
+            it?.let {
+                showList(it)
+            }
         })
 
         model.moviesError.observe(this, Observer(this::handleError))
-    }
-
-    override fun onResume() {
-        super.onResume()
-        model.loadSuggestions("batman")
     }
 
     private fun handleError(it: Throwable?) {
@@ -73,15 +89,16 @@ class SearchFragment : Fragment(), ItemClick {
                 .show()
     }
 
-    private fun showList(it: List<Movie>?) {
+    private fun showList(it: List<Movie>) {
+        if (it.isEmpty()) {
+            binding.rvListing.visibility = View.GONE
+        }
 
-        it?.let {
-            if (binding.rvListing.adapter == null) {
-                searchAdapter = SearchAdapter(it, this)
-                binding.rvListing.adapter = searchAdapter
-            } else {
-                searchAdapter.updateItems(it)
-            }
+        if (binding.rvListing.adapter == null) {
+            searchAdapter = SearchAdapter(it, this)
+            binding.rvListing.adapter = searchAdapter
+        } else {
+            searchAdapter.updateItems(it)
         }
     }
 }

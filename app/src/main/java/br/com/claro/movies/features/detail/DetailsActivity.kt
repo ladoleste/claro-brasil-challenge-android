@@ -42,7 +42,9 @@ class DetailsActivity : AppCompatActivity(), ItemTrailerClick {
         }
 
         model.trailers.observe(this, Observer {
-            loadTrailers(it)
+            it?.let {
+                loadTrailers(it)
+            }
             binding.loading.visibility = View.GONE
         })
 
@@ -54,35 +56,38 @@ class DetailsActivity : AppCompatActivity(), ItemTrailerClick {
         model.movieError.observe(this, Observer(this::handleError))
     }
 
-    private fun loadTrailers(it: List<Trailer>?) {
+    private fun loadTrailers(it: List<Trailer>) {
+        val youTubePlayerFragment = fragmentManager.findFragmentById(R.id.youtube_fragment) as YouTubePlayerFragment
 
-        it?.let {
-            val youTubePlayerFragment = fragmentManager.findFragmentById(R.id.youtube_fragment) as YouTubePlayerFragment
-            youTubePlayerFragment.initialize(BuildConfig.YOUTUBE_API_KEY, object : YouTubePlayer.OnInitializedListener {
-                override fun onInitializationSuccess(provider: YouTubePlayer.Provider, player: YouTubePlayer, wasRestored: Boolean) {
-                    if (!wasRestored) {
-                        player.cueVideo(it.first().key)
-                    }
+        if (it.isEmpty()) {
+            youTubePlayerFragment.view.visibility = View.GONE
+            return
+        }
+
+        youTubePlayerFragment.initialize(BuildConfig.YOUTUBE_API_KEY, object : YouTubePlayer.OnInitializedListener {
+            override fun onInitializationSuccess(provider: YouTubePlayer.Provider, player: YouTubePlayer, wasRestored: Boolean) {
+                if (!wasRestored) {
+                    player.cueVideo(it.first().key)
                 }
-
-                override fun onInitializationFailure(provider: YouTubePlayer.Provider?, errorReason: YouTubeInitializationResult) {
-                    if (errorReason.isUserRecoverableError) {
-                        errorReason.getErrorDialog(this@DetailsActivity, 1).show()
-                    } else {
-                        val errorMessage = String.format(getString(R.string.error_player), errorReason.toString())
-                        Toast.makeText(this@DetailsActivity, errorMessage, Toast.LENGTH_LONG).show()
-                    }
-                }
-            })
-
-            if (binding.rvListing.adapter == null) {
-                binding.rvListing.layoutManager = LinearLayoutManager(this)
-                val trailers = it.toMutableList()
-                if (trailers.isNotEmpty())
-                    trailers.removeAt(0)
-                trailerAdapter = TrailerAdapter(trailers, this)
-                binding.rvListing.adapter = trailerAdapter
             }
+
+            override fun onInitializationFailure(provider: YouTubePlayer.Provider?, errorReason: YouTubeInitializationResult) {
+                if (errorReason.isUserRecoverableError) {
+                    errorReason.getErrorDialog(this@DetailsActivity, 1).show()
+                } else {
+                    val errorMessage = String.format(getString(R.string.error_player), errorReason.toString())
+                    Toast.makeText(this@DetailsActivity, errorMessage, Toast.LENGTH_LONG).show()
+                }
+            }
+        })
+
+        if (binding.rvListing.adapter == null) {
+            binding.rvListing.layoutManager = LinearLayoutManager(this)
+            val trailers = it.toMutableList()
+            if (trailers.isNotEmpty())
+                trailers.removeAt(0)
+            trailerAdapter = TrailerAdapter(trailers, this)
+            binding.rvListing.adapter = trailerAdapter
         }
     }
 

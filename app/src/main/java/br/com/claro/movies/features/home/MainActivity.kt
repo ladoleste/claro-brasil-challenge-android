@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         binding.navigation.setOnNavigationItemSelectedListener(this)
 
-        addFragment(fragMain, R.id.container)
+        addFragment(fragSearch, R.id.container)
 
         binding.setLifecycleOwner(this)
     }
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 replaceFragment(fragFav, R.id.container)
                 return true
             }
-            R.id.navigation_about -> {
+            R.id.navigation_search -> {
                 replaceFragment(fragSearch, R.id.container)
                 return true
             }

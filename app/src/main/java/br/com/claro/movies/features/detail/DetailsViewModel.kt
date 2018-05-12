@@ -22,6 +22,8 @@ class DetailsViewModel : BaseViewModel() {
     val movie = MutableLiveData<MovieDetails>()
     val trailers = MutableLiveData<List<Trailer>>()
     val title = MutableLiveData<String>()
+    val releaseDate = MutableLiveData<String>()
+    val overview = MutableLiveData<String>()
     val posterUrl = MutableLiveData<String>()
     val isFavorite = MutableLiveData<Boolean>()
 
@@ -41,6 +43,8 @@ class DetailsViewModel : BaseViewModel() {
                     movie.postValue(it)
                     title.postValue(it.title)
                     posterUrl.postValue(it.posterUrl)
+                    overview.postValue(it.overview)
+                    releaseDate.postValue(it.releaseDate)
                     isFavorite.postValue(favorite)
                 }, {
                     movieError.postValue(it)
