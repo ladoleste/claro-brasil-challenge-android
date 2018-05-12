@@ -14,107 +14,105 @@
             type="br.com.claro.movies.features.detail.DetailsViewModel" />
     </data>
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/root_view"
-        android:animateLayoutChanges="true"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#fff">
+        android:layout_height="match_parent">
 
-        <include
-            android:id="@+id/inc_toolbar"
-            layout="@layout/inc_toolbar" />
-
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@{model.title}"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/iv_avatar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inc_toolbar"
-            tools:text="MVVM with LiveData and DataBindnig" />
-
-        <TextView
-            android:id="@+id/tv_author"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@{model.releaseDate}"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toStartOf="@+id/iv_avatar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title"
-            tools:text="Claro" />
-
-        <TextView
-            android:id="@+id/tv_languages"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@{model.overview}"
-            android:textSize="18sp"
-            android:layout_margin="8dp"
-            android:textStyle="italic"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_avatar"
-            tools:text="The best movie ever" />
-
-        <ImageView
-            android:id="@+id/iv_avatar"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:contentDescription="@string/none"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/ic_launcher"
-            app:imageUrl="@{model.posterUrl}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_title" />
-
-        <android.support.constraint.Barrier
-            android:id="@+id/barrier1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="bottom"
-            app:constraint_referenced_ids="iv_avatar,tv_languages" />
-
-        <Switch
-            android:id="@+id/sw_favorites"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/root_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/save_to_favorites"
-            app:layout_constraintTop_toBottomOf="@id/barrier1" />
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
+            android:background="#fff">
 
-        <LinearLayout
-            android:id="@+id/ll_container"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/sw_favorites" />
+            <include
+                android:id="@+id/inc_toolbar"
+                layout="@layout/inc_toolbar" />
 
-        <ProgressBar
-            android:id="@+id/loading"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="gone" />
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{model.title}"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/iv_avatar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inc_toolbar"
+                tools:text="MVVM with LiveData and DataBindnig" />
 
-        <fragment
-            android:id="@+id/youtube_fragment"
-            android:name="com.google.android.youtube.player.YouTubePlayerFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/ll_container" />
+            <TextView
+                android:id="@+id/tv_author"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{model.releaseDate}"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/iv_avatar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_title"
+                tools:text="Claro" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_listing"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/youtube_fragment" />
+            <TextView
+                android:id="@+id/tv_languages"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="@{model.overview}"
+                android:textSize="18sp"
+                android:textStyle="italic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_avatar"
+                tools:text="The best movie ever" />
 
-    </android.support.constraint.ConstraintLayout>
+            <ImageView
+                android:id="@+id/iv_avatar"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:contentDescription="@string/none"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_launcher"
+                app:imageUrl="@{model.posterUrl}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_title" />
 
+            <android.support.constraint.Barrier
+                android:id="@+id/barrier1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="iv_avatar,tv_languages" />
+
+            <Switch
+                android:id="@+id/sw_favorites"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/save_to_favorites"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/barrier1" />
+
+            <fragment
+                android:id="@+id/youtube_fragment"
+                android:name="com.google.android.youtube.player.YouTubePlayerFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/sw_favorites" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_listing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/youtube_fragment" />
+
+            <ProgressBar
+                android:id="@+id/loading"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="gone" />
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.NestedScrollView>
 </layout>

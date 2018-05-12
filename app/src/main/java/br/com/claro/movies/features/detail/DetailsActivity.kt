@@ -32,7 +32,7 @@ class DetailsActivity : AppCompatActivity(), ItemTrailerClick {
         binding.setLifecycleOwner(this)
         setSupportActionBar(binding.incToolbar!!.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
+        binding.rvListing.isNestedScrollingEnabled = false
         binding.swFavorites.setOnClickListener {
             if (binding.swFavorites.isChecked) {
                 model.addToFavorites()
