@@ -6,7 +6,6 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
@@ -14,7 +13,7 @@ import br.com.claro.movies.BuildConfig
 import br.com.claro.movies.R
 import br.com.claro.movies.common.getErrorMessage
 import br.com.claro.movies.databinding.ActivityDetailsBinding
-import br.com.claro.movies.dto.Poster
+import br.com.claro.movies.dto.Backdrop
 import br.com.claro.movies.dto.Trailer
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
@@ -23,7 +22,6 @@ import com.google.android.youtube.player.YouTubePlayerFragment
 class DetailsActivity : AppCompatActivity(), ItemTrailerClick {
     private lateinit var model: DetailsViewModel
     private lateinit var binding: ActivityDetailsBinding
-    private lateinit var trailerAdapter: TrailerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +31,6 @@ class DetailsActivity : AppCompatActivity(), ItemTrailerClick {
         binding.setLifecycleOwner(this)
         setSupportActionBar(binding.incToolbar!!.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        binding.rvListing.isNestedScrollingEnabled = false
         binding.swFavorites.setOnClickListener {
             if (binding.swFavorites.isChecked) {
                 model.addToFavorites()
@@ -66,10 +63,10 @@ class DetailsActivity : AppCompatActivity(), ItemTrailerClick {
         model.imagesError.observe(this, Observer(this::handleError))
     }
 
-    private fun loadImages(it: List<Poster>) {
-        binding.viewPager.clipToPadding = false
-        binding.viewPager.setPadding(40, 0, 40, 0)
-        binding.viewPager.adapter = ImagePagerAdapter(it)
+    private fun loadImages(it: List<Backdrop>) {
+        binding.viewPagerImages.clipToPadding = false
+        binding.viewPagerImages.setPadding(40, 0, 40, 0)
+        binding.viewPagerImages.adapter = ImagePagerAdapter(it)
     }
 
     private fun loadTrailers(it: List<Trailer>) {
@@ -97,14 +94,9 @@ class DetailsActivity : AppCompatActivity(), ItemTrailerClick {
             }
         })
 
-        if (binding.rvListing.adapter == null) {
-            binding.rvListing.layoutManager = LinearLayoutManager(this)
-            val trailers = it.toMutableList()
-            if (trailers.isNotEmpty())
-                trailers.removeAt(0)
-            trailerAdapter = TrailerAdapter(trailers, this)
-            binding.rvListing.adapter = trailerAdapter
-        }
+        binding.viewPagerVideos.clipToPadding = false
+        binding.viewPagerVideos.setPadding(40, 0, 40, 0)
+        binding.viewPagerVideos.adapter = VideoPagerAdapter(it)
     }
 
     override fun onResume() {

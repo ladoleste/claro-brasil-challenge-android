@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Claro Videos</string>
-    <string name="title_home">Início</string>
+    <string name="title_home">Em Alta</string>
     <string name="title_favorites">Favoritos</string>
     <string name="title_search">Pesquisar</string>
     <string name="retry">TENTAR NOVAMENTE</string>
@@ -10,4 +10,5 @@
     <string name="save_to_favorites">Adicionar aos favoritos</string>
     <string name="no_favorites">Nenhum favorito adicionado no momento</string>
     <string name="error_player">Ocorreu um erro ao inicializar o YouTubePlayer (%1$s)</string>
+    <string name="more_videos">Mais vídeos</string>
 </resources>

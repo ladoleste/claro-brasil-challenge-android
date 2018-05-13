@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Claro Videos</string>
-    <string name="title_home">Home</string>
+    <string name="title_home">Popular</string>
     <string name="title_favorites">Favorites</string>
     <string name="title_search">Search</string>
     <string name="retry">RETRY</string>
@@ -10,4 +10,5 @@
     <string name="none">none</string>
     <string name="save_to_favorites">Save to Favorites</string>
     <string name="no_favorites">No favorites at the moment</string>
+    <string name="more_videos">More videos</string>
 </resources>

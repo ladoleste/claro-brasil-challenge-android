@@ -31,4 +31,5 @@ data class MovieDetails(
         @SerializedName("vote_count") val voteCount: Int
 ) {
     val posterUrl get() = BuildConfig.BASE_IMAGE_PATH + posterPath
+    val year get() = if (releaseDate.contains("-")) releaseDate.split("-").first() else ""
 }

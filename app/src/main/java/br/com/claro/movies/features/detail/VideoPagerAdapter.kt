@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import br.com.claro.movies.R
-import br.com.claro.movies.dto.Backdrop
+import br.com.claro.movies.dto.Trailer
 import com.bumptech.glide.Glide
 
 
-class ImagePagerAdapter(private val images: List<Backdrop>) : PagerAdapter() {
+class VideoPagerAdapter(private val videos: List<Trailer>) : PagerAdapter() {
 
     override fun isViewFromObject(view: View, obj: Any) = view === obj
 
@@ -20,13 +20,13 @@ class ImagePagerAdapter(private val images: List<Backdrop>) : PagerAdapter() {
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
 
-        val image = images[position]
+        val video = videos[position]
         val inflater = LayoutInflater.from(container.context)
         val layout = inflater.inflate(R.layout.item_image, container, false) as ImageView
-        Glide.with(container.context).load(image.fileUrl).into(layout)
+        Glide.with(container.context).load(video.thumbnail).into(layout)
         container.addView(layout)
         return layout
     }
 
-    override fun getCount() = images.size
+    override fun getCount() = videos.size
 }
