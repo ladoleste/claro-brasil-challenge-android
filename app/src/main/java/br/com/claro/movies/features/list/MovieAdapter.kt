@@ -27,7 +27,7 @@ class MovieAdapter(_items: List<Movie>, private val itemClick: ItemClick) : Recy
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val movie = items[position]
-        holder.itemView.setOnClickListener { itemClick.onItemClick(movie, holder.itemView.iv_avatar) }
+        holder.itemView.setOnClickListener { itemClick.onItemClick(movie, holder.itemView.iv_poster) }
         holder.bind(movie)
     }
 
@@ -35,7 +35,7 @@ class MovieAdapter(_items: List<Movie>, private val itemClick: ItemClick) : Recy
 
         fun bind(item: Movie) {
             binding.movie = item
-            binding.ivAvatar.loadImage(item.posterUrl)
+            binding.ivPoster.loadImage(item.posterUrl)
             binding.executePendingBindings()
         }
     }

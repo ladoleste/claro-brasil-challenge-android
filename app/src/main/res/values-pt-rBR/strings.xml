@@ -7,7 +7,7 @@
     <string name="no_connection">Sem conexão com a Internet</string>
     <string name="generic_error">Ocorreu um erro, gostaria de tentar novamente</string>
     <string name="none">nada</string>
-    <string name="save_to_favorites">Adicionar aos favoritos</string>
+    <string name="add_to_favorites">Adicionar aos favoritos</string>
     <string name="no_favorites">Nenhum favorito adicionado no momento</string>
     <string name="error_player">Ocorreu um erro ao inicializar o YouTubePlayer (%1$s)</string>
     <string name="more_videos">Mais vídeos</string>

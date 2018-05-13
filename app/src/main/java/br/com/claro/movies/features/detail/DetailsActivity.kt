@@ -62,12 +62,14 @@ class DetailsActivity : AppCompatActivity() {
         model.movieError.observe(this, Observer(this::handleError))
         model.trailersError.observe(this, Observer(this::handleError))
         model.imagesError.observe(this, Observer(this::handleError))
+
+        binding.tabLayout.setupWithViewPager(binding.viewPagerImages, true)
     }
 
     private fun loadImages(it: List<Backdrop>) {
         binding.viewPagerImages.clipToPadding = false
         binding.viewPagerImages.setPadding(40, 0, 40, 0)
-        binding.viewPagerImages.adapter = ImagePagerAdapter(it)
+        binding.viewPagerImages.adapter = ImagePagerAdapter(it.take(10))
     }
 
     private fun loadTrailers(it: List<Trailer>) {
@@ -97,11 +99,13 @@ class DetailsActivity : AppCompatActivity() {
 
         binding.viewPagerVideos.clipToPadding = false
         binding.viewPagerVideos.setPadding(40, 0, 40, 0)
-        binding.viewPagerVideos.adapter = VideoPagerAdapter(it, object : ItemTrailerClick {
-            override fun onItemClick(movie: Trailer) {
-                startActivity(YouTubeIntents.createPlayVideoIntentWithOptions(this@DetailsActivity, movie.key, true, false))
-            }
-        })
+        if (it.size > 1) {
+            binding.viewPagerVideos.adapter = VideoPagerAdapter(it.drop(1), object : ItemTrailerClick {
+                override fun onItemClick(movie: Trailer) {
+                    startActivity(YouTubeIntents.createPlayVideoIntentWithOptions(this@DetailsActivity, movie.key, true, false))
+                }
+            })
+        }
     }
 
     override fun onResume() {

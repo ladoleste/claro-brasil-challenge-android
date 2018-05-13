@@ -31,41 +31,32 @@
                 android:text="@{movie.title}"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/iv_avatar"
+                app:layout_constraintEnd_toStartOf="@+id/iv_poster"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="MVVM with LiveData and DataBindnig" />
 
             <TextView
-                android:id="@+id/tv_author"
+                android:id="@+id/tv_overview"
                 android:layout_width="0dp"
+                android:layout_marginTop="16dp"
                 android:layout_height="wrap_content"
-                android:text="@{movie.title}"
+                android:ellipsize="end"
+                android:maxLines="4"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toStartOf="@+id/iv_avatar"
+                android:text="@{movie.overview}"
+                android:textStyle="italic"
+                app:layout_constraintEnd_toStartOf="@+id/iv_poster"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_title"
                 tools:text="Claro" />
 
-            <TextView
-                android:id="@+id/tv_languages"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:text="@{movie.title}"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toStartOf="@+id/iv_avatar"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_author"
-                tools:text="Claro" />
-
             <ImageView
-                android:id="@+id/iv_avatar"
+                android:id="@+id/iv_poster"
                 android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_height="150dp"
                 android:contentDescription="@string/none"
-                android:scaleType="centerCrop"
+                android:scaleType="fitXY"
                 android:src="@mipmap/ic_launcher"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_title" />
