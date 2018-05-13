@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import br.com.claro.movies.R
+import br.com.claro.movies.common.Util
 import br.com.claro.movies.databinding.FragmentFavoritesBinding
 import br.com.claro.movies.dto.Movie
 import br.com.claro.movies.features.common.ItemClick
@@ -34,6 +35,9 @@ class FavoritesFragment : Fragment(), ItemClick {
 
         val linearLayoutManager = LinearLayoutManager(activity)
         binding.rvListing.layoutManager = linearLayoutManager
+
+        Util.hideKeyboard(binding.rootView)
+
         return binding.root
     }
 

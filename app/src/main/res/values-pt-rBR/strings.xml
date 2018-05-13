@@ -11,4 +11,6 @@
     <string name="no_favorites">Nenhum favorito adicionado no momento</string>
     <string name="error_player">Ocorreu um erro ao inicializar o YouTubePlayer (%1$s)</string>
     <string name="more_videos">Mais vídeos</string>
+    <string name="images">Imagens</string>
+    <string name="trailer">Trailer</string>
 </resources>

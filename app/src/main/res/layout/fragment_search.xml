@@ -30,7 +30,10 @@
                 android:drawablePadding="16dp"
                 android:drawableStart="@drawable/ic_search_black_24dp"
                 android:hint="@string/title_search"
-                android:inputType="text" />
+                android:inputType="text">
+
+                <requestFocus />
+            </EditText>
 
         </android.support.v7.widget.Toolbar>
 

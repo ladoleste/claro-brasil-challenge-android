@@ -24,7 +24,11 @@ fun ImageView.loadImage(imageUrl: String?) {
     if (context is Activity) {
         val act = context as Activity
         if (!act.isFinishing && !act.isDestroyed)
-            Glide.with(act).load(imageUrl).apply(RequestOptions().placeholder(drawable)).into(this)
+            if (imageUrl != null && !imageUrl.endsWith("null")) {
+                Glide.with(act).load(imageUrl).apply(RequestOptions().placeholder(drawable)).into(this)
+            } else {
+                this.setImageResource(R.drawable.ic_photo_camera_black_24dp)
+            }
     }
 }
 

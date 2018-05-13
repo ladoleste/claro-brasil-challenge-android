@@ -44,7 +44,6 @@ class DetailsActivity : AppCompatActivity() {
             it?.let {
                 loadImages(it)
             }
-            binding.loading.visibility = View.GONE
         })
 
         model.trailers.observe(this, Observer {
@@ -63,12 +62,16 @@ class DetailsActivity : AppCompatActivity() {
         model.trailersError.observe(this, Observer(this::handleError))
         model.imagesError.observe(this, Observer(this::handleError))
 
-        binding.tabLayout.setupWithViewPager(binding.viewPagerImages, true)
+        binding.tabLayoutImages.setupWithViewPager(binding.viewPagerImages, true)
+        binding.tabLayoutVideos.setupWithViewPager(binding.viewPagerVideos, true)
     }
 
     private fun loadImages(it: List<Backdrop>) {
-        binding.viewPagerImages.clipToPadding = false
-        binding.viewPagerImages.setPadding(40, 0, 40, 0)
+        if (it.isEmpty()) {
+            binding.tvImages.visibility = View.GONE
+            return
+        }
+
         binding.viewPagerImages.adapter = ImagePagerAdapter(it.take(10))
     }
 
@@ -77,6 +80,8 @@ class DetailsActivity : AppCompatActivity() {
 
         if (it.isEmpty()) {
             youTubePlayerFragment.view.visibility = View.GONE
+            binding.tvTrailer.visibility = View.GONE
+            binding.tvMoreVideos.visibility = View.GONE
             return
         }
 
@@ -97,14 +102,14 @@ class DetailsActivity : AppCompatActivity() {
             }
         })
 
-        binding.viewPagerVideos.clipToPadding = false
-        binding.viewPagerVideos.setPadding(40, 0, 40, 0)
         if (it.size > 1) {
             binding.viewPagerVideos.adapter = VideoPagerAdapter(it.drop(1), object : ItemTrailerClick {
                 override fun onItemClick(movie: Trailer) {
                     startActivity(YouTubeIntents.createPlayVideoIntentWithOptions(this@DetailsActivity, movie.key, true, false))
                 }
             })
+        } else {
+            binding.tvMoreVideos.visibility = View.GONE
         }
     }
 

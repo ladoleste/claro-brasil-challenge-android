@@ -7,6 +7,8 @@ import android.graphics.drawable.Drawable
 import android.support.annotation.DrawableRes
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.content.res.AppCompatResources
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 
 /**
  * Created by Anderson on 29/03/2018.
@@ -34,5 +36,15 @@ object Util {
 
         }
         return ""
+    }
+
+    fun showKeyboard() {
+        val imm = ClaroApplication.instance.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+    }
+
+    fun hideKeyboard(view: View) {
+        val imm = ClaroApplication.instance.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }

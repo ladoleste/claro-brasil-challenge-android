@@ -16,11 +16,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import br.com.claro.movies.R
+import br.com.claro.movies.common.Util
 import br.com.claro.movies.common.getErrorMessage
 import br.com.claro.movies.databinding.FragmentSearchBinding
 import br.com.claro.movies.dto.Movie
 import br.com.claro.movies.features.common.ItemClick
 import br.com.claro.movies.features.detail.DetailsActivity
+
 
 class SearchFragment : Fragment(), ItemClick {
 
@@ -72,6 +74,8 @@ class SearchFragment : Fragment(), ItemClick {
         })
 
         model.moviesError.observe(this, Observer(this::handleError))
+
+        Util.showKeyboard()
     }
 
     private fun handleError(it: Throwable?) {
@@ -89,7 +93,10 @@ class SearchFragment : Fragment(), ItemClick {
     private fun showList(it: List<Movie>) {
         if (it.isEmpty()) {
             binding.rvListing.visibility = View.GONE
+            return
         }
+
+        binding.rvListing.visibility = View.VISIBLE
 
         if (binding.rvListing.adapter == null) {
             searchAdapter = SearchAdapter(it, this)

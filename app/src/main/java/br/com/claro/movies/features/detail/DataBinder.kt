@@ -3,6 +3,7 @@ package br.com.claro.movies.features.detail
 import android.databinding.BindingAdapter
 import android.view.View
 import android.widget.ImageView
+import br.com.claro.movies.R
 import com.bumptech.glide.Glide
 
 
@@ -13,7 +14,11 @@ object DataBinder {
     @JvmStatic
     @BindingAdapter("imageUrl")
     fun setImageUrl(imageView: ImageView, url: String?) {
-        Glide.with(imageView.context).load(url).into(imageView)
+        if (url != null && !url.endsWith("null")) {
+            Glide.with(imageView.context).load(url).into(imageView)
+        } else {
+            imageView.setImageResource(R.drawable.ic_photo_camera_black_24dp)
+        }
     }
 
     @JvmStatic
