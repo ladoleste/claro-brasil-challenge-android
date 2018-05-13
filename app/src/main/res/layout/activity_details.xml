@@ -78,6 +78,7 @@
                     android:layout_margin="8dp"
                     android:gravity="center"
                     android:text=""
+                    android:checked="@{model.isFavorite}"
                     app:layout_constraintEnd_toStartOf="@+id/iv_poster"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_favorites" />

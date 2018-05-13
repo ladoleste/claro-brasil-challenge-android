@@ -81,6 +81,7 @@ class DetailsViewModel : BaseViewModel() {
         try {
             repo.addToFavorite(movie.value!!.toMovie())
         } catch (e: Exception) {
+            Timber.e(e)
             movieError.postValue(e)
         }
     }
@@ -89,6 +90,7 @@ class DetailsViewModel : BaseViewModel() {
         try {
             repo.removeFromFavorites(movie.value!!.toMovie())
         } catch (e: Exception) {
+            Timber.e(e)
             movieError.postValue(e)
         }
     }
