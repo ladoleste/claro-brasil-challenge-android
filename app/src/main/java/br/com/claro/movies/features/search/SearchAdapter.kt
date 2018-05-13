@@ -7,6 +7,7 @@ import br.com.claro.movies.common.loadImage
 import br.com.claro.movies.databinding.ItemMovieBinding
 import br.com.claro.movies.dto.Movie
 import br.com.claro.movies.features.common.ItemClick
+import kotlinx.android.synthetic.main.item_movie.view.*
 
 
 class SearchAdapter(_items: List<Movie>, private val itemClick: ItemClick) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
@@ -26,7 +27,7 @@ class SearchAdapter(_items: List<Movie>, private val itemClick: ItemClick) : Rec
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val movie = items[position]
-        holder.itemView.setOnClickListener { itemClick.onItemClick(movie) }
+        holder.itemView.setOnClickListener { itemClick.onItemClick(movie, holder.itemView.iv_avatar) }
         holder.bind(movie)
     }
 

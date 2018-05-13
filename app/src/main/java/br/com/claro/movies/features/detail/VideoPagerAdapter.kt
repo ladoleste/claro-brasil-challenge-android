@@ -10,7 +10,7 @@ import br.com.claro.movies.dto.Trailer
 import com.bumptech.glide.Glide
 
 
-class VideoPagerAdapter(private val videos: List<Trailer>) : PagerAdapter() {
+class VideoPagerAdapter(private val videos: List<Trailer>, private val click: ItemTrailerClick) : PagerAdapter() {
 
     override fun isViewFromObject(view: View, obj: Any) = view === obj
 
@@ -22,10 +22,11 @@ class VideoPagerAdapter(private val videos: List<Trailer>) : PagerAdapter() {
 
         val video = videos[position]
         val inflater = LayoutInflater.from(container.context)
-        val layout = inflater.inflate(R.layout.item_image, container, false) as ImageView
-        Glide.with(container.context).load(video.thumbnail).into(layout)
-        container.addView(layout)
-        return layout
+        val imageView = inflater.inflate(R.layout.item_image, container, false) as ImageView
+        Glide.with(container.context).load(video.thumbnail).into(imageView)
+        imageView.setOnClickListener { click.onItemClick(video) }
+        container.addView(imageView)
+        return imageView
     }
 
     override fun getCount() = videos.size

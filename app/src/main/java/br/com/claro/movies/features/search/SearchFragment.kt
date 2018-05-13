@@ -1,5 +1,6 @@
 package br.com.claro.movies.features.search
 
+import android.app.ActivityOptions
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
@@ -13,6 +14,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import br.com.claro.movies.R
 import br.com.claro.movies.common.getErrorMessage
 import br.com.claro.movies.databinding.FragmentSearchBinding
@@ -21,11 +23,6 @@ import br.com.claro.movies.features.common.ItemClick
 import br.com.claro.movies.features.detail.DetailsActivity
 
 class SearchFragment : Fragment(), ItemClick {
-    override fun onItemClick(movie: Movie) {
-        val intent = Intent(context, DetailsActivity::class.java)
-        intent.putExtra("id", movie.id)
-        startActivity(intent)
-    }
 
     private lateinit var binding: FragmentSearchBinding
     private lateinit var searchAdapter: SearchAdapter
@@ -100,5 +97,13 @@ class SearchFragment : Fragment(), ItemClick {
         } else {
             searchAdapter.updateItems(it)
         }
+    }
+
+    override fun onItemClick(movie: Movie, image: ImageView) {
+        val intent = Intent(context, DetailsActivity::class.java)
+        intent.putExtra("id", movie.id)
+
+        val options = ActivityOptions.makeSceneTransitionAnimation(activity, image, "name")
+        startActivity(intent, options.toBundle())
     }
 }

@@ -2,10 +2,6 @@
 
     <data>
 
-        <import type="android.view.View" />
-
-        <import type="br.com.claro.movies.dto.Movie" />
-
         <variable
             name="movie"
             type="br.com.claro.movies.dto.Movie" />

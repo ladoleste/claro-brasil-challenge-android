@@ -16,10 +16,11 @@ import br.com.claro.movies.databinding.ActivityDetailsBinding
 import br.com.claro.movies.dto.Backdrop
 import br.com.claro.movies.dto.Trailer
 import com.google.android.youtube.player.YouTubeInitializationResult
+import com.google.android.youtube.player.YouTubeIntents
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerFragment
 
-class DetailsActivity : AppCompatActivity(), ItemTrailerClick {
+class DetailsActivity : AppCompatActivity() {
     private lateinit var model: DetailsViewModel
     private lateinit var binding: ActivityDetailsBinding
 
@@ -96,7 +97,11 @@ class DetailsActivity : AppCompatActivity(), ItemTrailerClick {
 
         binding.viewPagerVideos.clipToPadding = false
         binding.viewPagerVideos.setPadding(40, 0, 40, 0)
-        binding.viewPagerVideos.adapter = VideoPagerAdapter(it)
+        binding.viewPagerVideos.adapter = VideoPagerAdapter(it, object : ItemTrailerClick {
+            override fun onItemClick(movie: Trailer) {
+                startActivity(YouTubeIntents.createPlayVideoIntentWithOptions(this@DetailsActivity, movie.key, true, false))
+            }
+        })
     }
 
     override fun onResume() {
@@ -120,9 +125,5 @@ class DetailsActivity : AppCompatActivity(), ItemTrailerClick {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         onBackPressed()
         return true
-    }
-
-    override fun onItemClick(movie: Trailer) {
-
     }
 }

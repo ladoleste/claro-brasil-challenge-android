@@ -1,5 +1,6 @@
 package br.com.claro.movies.features.favorites
 
+import android.app.ActivityOptions
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
@@ -10,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import br.com.claro.movies.R
 import br.com.claro.movies.databinding.FragmentFavoritesBinding
 import br.com.claro.movies.dto.Movie
@@ -17,11 +19,6 @@ import br.com.claro.movies.features.common.ItemClick
 import br.com.claro.movies.features.detail.DetailsActivity
 
 class FavoritesFragment : Fragment(), ItemClick {
-    override fun onItemClick(movie: Movie) {
-        val intent = Intent(context, DetailsActivity::class.java)
-        intent.putExtra("id", movie.id)
-        startActivity(intent)
-    }
 
     private lateinit var binding: FragmentFavoritesBinding
     private lateinit var favoritesAdapter: FavoritesAdapter
@@ -71,5 +68,12 @@ class FavoritesFragment : Fragment(), ItemClick {
                 }
             }
         }
+    }
+
+    override fun onItemClick(movie: Movie, image: ImageView) {
+        val intent = Intent(context, DetailsActivity::class.java)
+        intent.putExtra("id", movie.id)
+        val options = ActivityOptions.makeSceneTransitionAnimation(activity, image, "name")
+        startActivity(intent, options.toBundle())
     }
 }
