@@ -41,11 +41,15 @@ class MainFragment : Fragment(), ItemClick {
         val linearLayoutManager = LinearLayoutManager(activity)
         binding.rvListing.layoutManager = linearLayoutManager
         binding.rvListing.setHasFixedSize(true)
-        binding.rvListing.addOnScrollListener(object : EndlessRecyclerViewScrollListener(linearLayoutManager) {
+
+        val scrollListener: EndlessRecyclerViewScrollListener = object : EndlessRecyclerViewScrollListener(linearLayoutManager) {
             override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
                 model.loadMovies(page)
             }
-        })
+        }
+
+        binding.rvListing.removeOnScrollListener(scrollListener)
+        binding.rvListing.addOnScrollListener(scrollListener)
         return binding.root
     }
 
