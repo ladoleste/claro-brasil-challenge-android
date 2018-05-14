@@ -94,10 +94,12 @@ class SearchFragment : Fragment(), ItemClick {
     private fun showList(it: List<Movie>) {
         if (it.isEmpty()) {
             binding.rvListing.visibility = View.GONE
+            binding.tvNoResults.visibility = View.VISIBLE
             return
         }
 
         binding.rvListing.visibility = View.VISIBLE
+        binding.tvNoResults.visibility = View.GONE
 
         if (binding.rvListing.adapter == null) {
             searchAdapter = SearchAdapter(it, this)
@@ -117,5 +119,10 @@ class SearchFragment : Fragment(), ItemClick {
         } else {
             startActivity(intent)
         }
+    }
+
+    override fun onStop() {
+        model.onStop()
+        super.onStop()
     }
 }

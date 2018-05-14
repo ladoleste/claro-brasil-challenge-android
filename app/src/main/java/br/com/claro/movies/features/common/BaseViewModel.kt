@@ -10,7 +10,7 @@ open class BaseViewModel : ViewModel() {
 
     protected val cDispose = CompositeDisposable()
 
-    fun dispose() {
+    fun onStop() {
         cDispose.clear()
     }
 }

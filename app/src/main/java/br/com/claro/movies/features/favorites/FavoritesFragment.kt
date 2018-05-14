@@ -52,25 +52,25 @@ class FavoritesFragment : Fragment(), ItemClick {
         super.onResume()
         model.loadFavorites().observe(this, Observer {
             binding.loading.visibility = View.GONE
-            showList(it)
+            it?.let {
+                showList(it)
+            }
         })
     }
 
-    private fun showList(it: List<Movie>?) {
-        it?.let {
-            if (it.isEmpty()) {
-                binding.rvListing.visibility = View.GONE
-                binding.tvNoFavorites.visibility = View.VISIBLE
-            } else {
-                binding.rvListing.visibility = View.VISIBLE
-                binding.tvNoFavorites.visibility = View.GONE
+    private fun showList(it: List<Movie>) {
+        if (it.isEmpty()) {
+            binding.rvListing.visibility = View.GONE
+            binding.tvNoFavorites.visibility = View.VISIBLE
+        } else {
+            binding.rvListing.visibility = View.VISIBLE
+            binding.tvNoFavorites.visibility = View.GONE
 
-                if (binding.rvListing.adapter == null) {
-                    favoritesAdapter = FavoritesAdapter(it, this)
-                    binding.rvListing.adapter = favoritesAdapter
-                } else {
-                    favoritesAdapter.updateItems(it)
-                }
+            if (binding.rvListing.adapter == null) {
+                favoritesAdapter = FavoritesAdapter(it, this)
+                binding.rvListing.adapter = favoritesAdapter
+            } else {
+                favoritesAdapter.updateItems(it)
             }
         }
     }
@@ -84,5 +84,10 @@ class FavoritesFragment : Fragment(), ItemClick {
         } else {
             startActivity(intent)
         }
+    }
+
+    override fun onStop() {
+        model.onStop()
+        super.onStop()
     }
 }

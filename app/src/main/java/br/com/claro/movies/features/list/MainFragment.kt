@@ -102,4 +102,9 @@ class MainFragment : Fragment(), ItemClick {
             startActivity(intent)
         }
     }
+
+    override fun onStop() {
+        model.onStop()
+        super.onStop()
+    }
 }
