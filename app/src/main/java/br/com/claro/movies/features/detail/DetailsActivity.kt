@@ -2,6 +2,7 @@ package br.com.claro.movies.features.detail
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.ActivityNotFoundException
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -105,7 +106,11 @@ class DetailsActivity : AppCompatActivity() {
         if (it.size > 1) {
             binding.viewPagerVideos.adapter = VideoPagerAdapter(it.drop(1), object : ItemTrailerClick {
                 override fun onItemClick(movie: Trailer) {
-                    startActivity(YouTubeIntents.createPlayVideoIntentWithOptions(this@DetailsActivity, movie.key, true, false))
+                    try {
+                        startActivity(YouTubeIntents.createPlayVideoIntentWithOptions(this@DetailsActivity, movie.key, true, false))
+                    } catch (e: ActivityNotFoundException) {
+                        Toast.makeText(this@DetailsActivity, R.string.youtube_missing, Toast.LENGTH_LONG).show()
+                    }
                 }
             })
         } else {

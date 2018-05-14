@@ -1,6 +1,5 @@
 package br.com.claro.movies.common
 
-import android.app.Activity
 import android.os.Build
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -15,22 +14,24 @@ import android.widget.ImageView
 import br.com.claro.movies.R
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import timber.log.Timber
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
 fun ViewGroup.inflate(layoutId: Int): View = LayoutInflater.from(context).inflate(layoutId, this, false)
 
 fun ImageView.loadImage(imageUrl: String?) {
-    if (context is Activity) {
-        val act = context as Activity
-        if (!act.isFinishing && !act.isDestroyed)
-            if (imageUrl != null && !imageUrl.endsWith("null")) {
-                Glide.with(act).load(imageUrl).apply(RequestOptions().placeholder(drawable)).into(this)
-            } else {
-                this.setImageResource(R.drawable.ic_photo_camera_black_24dp)
-            }
+    try {
+        if (imageUrl != null && !imageUrl.endsWith("null")) {
+            Glide.with(context).load(imageUrl).apply(RequestOptions().placeholder(drawable)).into(this)
+        } else {
+            this.setImageResource(R.drawable.ic_photo_camera_black_24dp)
+        }
+    } catch (e: Exception) {
+        Timber.e(e)
     }
 }
+
 
 fun String.toHtml(): Spanned {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

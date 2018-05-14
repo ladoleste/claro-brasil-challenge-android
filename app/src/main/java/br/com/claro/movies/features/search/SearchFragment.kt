@@ -4,6 +4,7 @@ import android.app.ActivityOptions
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
@@ -110,7 +111,11 @@ class SearchFragment : Fragment(), ItemClick {
         val intent = Intent(context, DetailsActivity::class.java)
         intent.putExtra("id", movie.id)
 
-        val options = ActivityOptions.makeSceneTransitionAnimation(activity, image, "name")
-        startActivity(intent, options.toBundle())
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val options = ActivityOptions.makeSceneTransitionAnimation(activity, image, "name")
+            startActivity(intent, options.toBundle())
+        } else {
+            startActivity(intent)
+        }
     }
 }

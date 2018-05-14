@@ -13,4 +13,5 @@
     <string name="more_videos">More videos</string>
     <string name="images">Images</string>
     <string name="trailer">Trailer</string>
+    <string name="youtube_missing">Youtube app not found</string>
 </resources>
