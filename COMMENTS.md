@@ -28,6 +28,7 @@ O que você melhoraria se tivesse mais tempo
 -------------
  - Testes unitários
  - Testes instrumentados com Espresso
+ - Abrir imagens em alta resolução
  - Controle de favoritos na listagem
  - Layout em paisagem (landscape)
  - Exibir mais detalhes tanto na listagem quanto nos detalhes
