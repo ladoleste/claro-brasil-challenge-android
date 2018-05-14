@@ -16,6 +16,7 @@ Lista de bibliotecas de teceiros utilizadas
 -------------
  - Retrofit 2
  - RxJava 2
+ - RxBindings
  - Dagger 2
  - Stetho
  - Timber

@@ -10,8 +10,6 @@ import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +21,9 @@ import br.com.claro.movies.databinding.FragmentSearchBinding
 import br.com.claro.movies.dto.Movie
 import br.com.claro.movies.features.common.ItemClick
 import br.com.claro.movies.features.detail.DetailsActivity
+import com.jakewharton.rxbinding2.widget.RxTextView
+import io.reactivex.android.schedulers.AndroidSchedulers
+import java.util.concurrent.TimeUnit
 
 
 class SearchFragment : Fragment(), ItemClick {
@@ -42,22 +43,13 @@ class SearchFragment : Fragment(), ItemClick {
         binding.rvListing.layoutManager = linearLayoutManager
         binding.rvListing.setHasFixedSize(true)
 
-        binding.etSearch.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable) {
-                if (s.isNotBlank()) {
+        RxTextView.textChanges(binding.etSearch)
+                .debounce(1, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
                     binding.loading.visibility = View.VISIBLE
-                    model.loadSuggestions(s.toString())
-                } else {
-                    showList(emptyList())
+                    model.loadSuggestions(it.toString())
                 }
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-        })
 
         return binding.root
     }
@@ -92,7 +84,7 @@ class SearchFragment : Fragment(), ItemClick {
     }
 
     private fun showList(it: List<Movie>) {
-        if (it.isEmpty()) {
+        if (it.isEmpty() || binding.etSearch.text.isBlank()) {
             binding.rvListing.visibility = View.GONE
             binding.tvNoResults.visibility = View.VISIBLE
             return

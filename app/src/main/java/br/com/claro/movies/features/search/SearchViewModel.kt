@@ -25,13 +25,18 @@ class SearchViewModel : BaseViewModel() {
     }
 
     fun loadSuggestions(query: String) {
-        cDispose.add(repo.getSuggestions(query)
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnError({ t -> Timber.e(t) })
-                .subscribe({
-                    movies.postValue(it.movies)
-                }, {
-                    moviesError.postValue(it)
-                }))
+
+        if (query.isBlank()) {
+            movies.postValue(emptyList())
+        } else {
+            cDispose.add(repo.getSuggestions(query)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnError({ t -> Timber.e(t) })
+                    .subscribe({
+                        movies.postValue(it.movies)
+                    }, {
+                        moviesError.postValue(it)
+                    }))
+        }
     }
 }
